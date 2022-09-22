@@ -1,15 +1,3 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: myclaim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  volumeMode: Filesystem
-  resources:
-    requests:
-      storage: 1Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,6 +18,7 @@ spec:
 #          persistentVolumeClaim:
 #            claimName: myclaim
       hostNetwork: true
+      restartPolicy: "Always"
       containers:
         - name: taurus-with-tilt
           image: taurus-with-tilt-image
