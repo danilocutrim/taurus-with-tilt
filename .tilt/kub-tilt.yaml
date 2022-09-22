@@ -15,8 +15,8 @@ spec:
     spec:
       volumes:
         - name: hostpath-volume
-#          persistentVolumeClaim:
-#            claimName: myclaim
+          persistentVolumeClaim:
+            claimName: taurus-volume
       hostNetwork: true
       restartPolicy: "Always"
       containers:
@@ -28,4 +28,18 @@ spec:
             - name: hostpath-volume
               mountPath: /mnt
 
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: taurus-volume
+  labels:
+    app: taurus-with-tilt
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
 
