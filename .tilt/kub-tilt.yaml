@@ -1,3 +1,15 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,22 +26,17 @@ spec:
         app: taurus-with-tilt
     spec:
       volumes:
-        - name: bzt
-          hostPath:
-            path: /Workspace/taurus-with-tilt/.tilt
+        - name: hostpath-volume
+#          persistentVolumeClaim:
+#            claimName: myclaim
       hostNetwork: true
       containers:
         - name: taurus-with-tilt
           image: taurus-with-tilt-image
-          command: [ "bzt" ]
-#          args: [ "test.yml"]
+          command: ["bzt" ]
+          args: [ "test.yml"]
           volumeMounts:
-            - name: bzt
-              mountPath: /tmp
-          env:
-            - name: ENV
-              value: dev
-            - name: JAVA_OPTS
-              value: >-
-                -Duser.timezone=America/Sao_Paulo -Dfile.encoding=UTF8 -Xms512m
-                -Xmx1024m
+            - name: hostpath-volume
+              mountPath: /mnt
+
+
