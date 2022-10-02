@@ -1,0 +1,8 @@
+execution:
+  concurrency: 50
+  ramp-up: 2m
+  hold-for: 10m
+  scenario: simple
+scenarios:
+  simple:
+    script: user.jmx
