@@ -36,6 +36,7 @@ metadata:
   labels:
     app: taurus-with-tilt
 spec:
+  name: taurus-volume
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
